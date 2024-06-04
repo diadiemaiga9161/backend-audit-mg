@@ -20,6 +20,8 @@ public class Role {
     public Role() {
     }
 
+    public Role(Object o, ERole eRole) {
+    }
 
 
     public Integer getId() {

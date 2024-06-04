@@ -1,6 +1,8 @@
 package com.Projet.Projet.utilisateur.dto;
 
 
+import com.Projet.Projet.utilisateur.TypeAuditeur.TypeAuditeur;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -24,6 +26,8 @@ public class SignupRequest {
     @Size(max = 50)
     @Email
     private String email;
+
+    private TypeAuditeur typeAuditeur;
 
     private Set<String> role;
 
@@ -104,4 +108,9 @@ public class SignupRequest {
     public void setRole(Set<String> role) {
         this.role = role;
     }
+
+    public TypeAuditeur getTypeAuditeur() {
+        return typeAuditeur;
+    }
+    public void setTypeAuditeur(TypeAuditeur typeAuditeur){this.typeAuditeur = typeAuditeur;}
 }

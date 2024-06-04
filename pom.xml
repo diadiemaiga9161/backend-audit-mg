@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.G-flotte</groupId>
-	<artifactId>G-flotte</artifactId>
+	<artifactId>Audit</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>G-flotte</name>
 	<description>Une application de gestion de flotte</description>

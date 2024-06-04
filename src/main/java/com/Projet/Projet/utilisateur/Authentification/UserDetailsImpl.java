@@ -1,7 +1,9 @@
 package com.Projet.Projet.Authentification;
 
+
 import com.Projet.Projet.utilisateur.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +21,12 @@ public class UserDetailsImpl implements UserDetails {
     private Long id;
 
     private String telephone;
+
+    @Getter
+    private Boolean statut;
+
+    private  List<String> TypeAuditeur;
+
 
     private String email;
 
@@ -43,10 +51,10 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    private List<String> specialites; // Ajout de la liste de spécialités
+//    private List<String> typeAuditeur; // Ajout de la liste de typeAuditeur
 
-    public UserDetailsImpl(Long id, String telephone, String email, String password, String nom, String prenom, String adresse,
-                           String genre, Boolean etat, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(Long id, String telephone, String email, String password,String nom, String prenom, String adresse,
+                           String genre, List<String> typeAuditeur,Boolean etat, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.telephone = telephone;
         this.email = email;
@@ -55,8 +63,12 @@ public class UserDetailsImpl implements UserDetails {
         this.prenom = prenom;
         this.adresse = adresse;
         this.genre = genre;
+        this.TypeAuditeur = typeAuditeur;
         this.etat = etat;
         this.authorities = authorities;
+    }
+
+    public UserDetailsImpl(Long id, String telephone, String email, String password, String nom, String prenom, String adresse, String genre, com.Projet.Projet.utilisateur.TypeAuditeur.TypeAuditeur typeAuditeur, Boolean etat, List<GrantedAuthority> authorities) {
     }
 
 
@@ -76,6 +88,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getPrenom(),
                 user.getAdresse(),
                 user.getGenre(),
+                user.getTypeAuditeur(),
                 user.getEtat(),
                 authorities
                 );
@@ -86,14 +99,16 @@ public class UserDetailsImpl implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
+//
+//    public List<String> getTypeAuditeur() {
+//        return typeAuditeur;
+//    }
+//
+//    public void setSpecialites(List<String> specialites) {
+//        this.typeAuditeur = typeAuditeur;
+//    }
 
-    public List<String> getSpecialites() {
-        return specialites;
-    }
 
-    public void setSpecialites(List<String> specialites) {
-        this.specialites = specialites;
-    }
 
     public Long getId() {
         return id;
@@ -171,5 +186,9 @@ public class UserDetailsImpl implements UserDetails {
             return false;
         UserDetailsImpl user = (UserDetailsImpl) o;
         return Objects.equals(id, user.id);
+    }
+
+    public List<String> getTypeAuditeur() {
+        return List.of();
     }
 }

@@ -26,4 +26,5 @@ public class Audit {
     @OneToOne
     @JoinColumn(name = "id_typeAudit")
     private TypeAudit typeAudit;
+
 }

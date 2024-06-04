@@ -35,7 +35,8 @@ public class UserInfoResponse {
     @Size(max = 50)
     @Email
     private String email;
-
+private  List<String> TypeAuditeur;
+private String Jwt;
     private List<String> roles;
     private List<String> specialite;
 
@@ -43,7 +44,7 @@ public class UserInfoResponse {
     private List<UserRolePermission> userRolePermissions; // Liste de photos
 
 
-    public UserInfoResponse(Long id, String telephone, String email, String nom, String prenom, String genre, String adresse, Date date, List<String> roles, List<String> specialite) {
+    public UserInfoResponse(Long id, String telephone, String email, String nom, String prenom, String genre, String adresse, List<String> typeAuditeur, Date date, List<String> roles,   String jwt) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -53,7 +54,25 @@ public class UserInfoResponse {
         this.date = date;
         this.email = email;
         this.roles = roles;
-        this.specialite = specialite;
+        this.TypeAuditeur = typeAuditeur;
+        this.Jwt = jwt;
+    }
+
+
+    public String getJwt() {
+        return Jwt;
+    }
+
+    public void setJwt(String jwt) {
+        Jwt = jwt;
+    }
+
+    public List<String> getTypeAuditeur() {
+        return TypeAuditeur;
+    }
+
+    public void setTypeAuditeur(List<String> typeAuditeur) {
+        TypeAuditeur = typeAuditeur;
     }
 
     public Long getId() {

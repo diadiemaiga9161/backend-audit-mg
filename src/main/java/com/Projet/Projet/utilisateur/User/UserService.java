@@ -82,13 +82,15 @@ public class UserService implements ServiceUtilisateur {
                         .body(new MessageResponse("Erreur d'authentification: Le compte est désactivé.", false));
             }
 
+
             ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+            String jwt = jwtUtils.generateJwtToken(userDetails);
 
             List<String> roles = userDetails.getAuthorities().stream()
                     .map(item -> item.getAuthority())
                     .collect(Collectors.toList());
 
-            List<String> specialites = userDetails.getSpecialites();
+//            List<String> typeAuditeur = userDetails.getTypeAuditeur();
 
             UserInfoResponse userInfoResponse = new UserInfoResponse(
                     userDetails.getId(),
@@ -98,9 +100,10 @@ public class UserService implements ServiceUtilisateur {
                     userDetails.getPrenom(),
                     userDetails.getGenre(),
                     userDetails.getAdresse(),
+                    userDetails.getTypeAuditeur(),
                     userDetails.getDate(),
                     roles,
-                    specialites
+                    jwt
             );
             List<UserRolePermission> permissions =  userPermissionRepository.findByUserId(userDetails.getId());
 
@@ -164,6 +167,7 @@ public class UserService implements ServiceUtilisateur {
                encoder.encode(signUpRequest.getPassword()),
                signUpRequest.getTelephone(),
                signUpRequest.getAdresse(),
+               signUpRequest.getTypeAuditeur(),
                signUpRequest.getGenre(),
                signUpRequest.getEmail()
        );
@@ -192,11 +196,11 @@ public class UserService implements ServiceUtilisateur {
                        break;
                    case "auditeurRole":
                        Role auditeurRole = roleRepository.findByName(ERole.ROLE_AUDITEUR)
-                               .orElseThrow(() -> new RuntimeException("Error: Le rôle auditeur maintenance n'a pas été trouvé."));
+                               .orElseThrow(() -> new RuntimeException("Error: Le rôle auditeur  n'a pas été trouvé."));
                        roles.add(auditeurRole);
                        break;
                    default:
-                       Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                       Role userRole = roleRepository.findByName(ERole.ROLE_ENTRPRISE)
                                .orElseThrow(() -> new RuntimeException("Error: Le rôle sans rôle n'a pas été trouvé."));
                        roles.add(userRole);
                        break;
@@ -215,6 +219,11 @@ public class UserService implements ServiceUtilisateur {
 
        return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès! Veuillez vérifier votre e-mail pour activer votre compte." + jwt, true));
    }
+
+    @Override
+    public List<User> getUsersByRole(ERole roleName) {
+        return List.of();
+    }
 
     @Override
     public ResponseEntity<String> activateAccount(String token) {
@@ -342,6 +351,17 @@ public class UserService implements ServiceUtilisateur {
 
         return ResponseEntity.badRequest().body(new MessageResponse("Le mot de passe n'a pas pu être modifié.", false));
     }
+
+    @Override
+    public Object updateUserProfile(User updateRequest) {
+        return null;
+    }
+
+    @Override
+    public MessageResponse Bannir(User user) {
+        return null;
+    }
+
     @Override
     public ResponseEntity<?> updateUserProfile(@Valid @ModelAttribute User updateRequest, @RequestParam("photo") MultipartFile photo) {
         // Obtenir l'utilisateur connecté à partir de l'objet Authentication
@@ -410,6 +430,36 @@ public class UserService implements ServiceUtilisateur {
             userPermissionList.add(userData);
         }
         return userPermissionList;
+    }
+
+    @Override
+    public ResponseEntity<?> updateUserPhoto(User updateRequest, MultipartFile photo) {
+        return null;
+    }
+
+    @Override
+    public User saveUser(User user) {
+        return null;
+    }
+
+    @Override
+    public Role saveRole(Role role) {
+        return roleRepository.save(role);
+    }
+
+    @Override
+    public User UserparId(Long id_user) {
+        return null;
+    }
+
+    @Override
+    public void addRoleToUser(String numero, ERole roleName) {
+
+    }
+
+    @Override
+    public Object AfficherInfoUserConnecter() {
+        return null;
     }
 
 

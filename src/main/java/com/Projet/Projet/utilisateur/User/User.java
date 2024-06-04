@@ -2,8 +2,10 @@ package com.Projet.Projet.utilisateur.User;
 
 
 import com.Projet.Projet.utilisateur.Role.Role;
+import com.Projet.Projet.utilisateur.TypeAuditeur.TypeAuditeur;
 import com.Projet.Projet.utilisateur.UtilisateurPhoto.UtilisateurPhoto;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
@@ -12,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Data
 @Table(name = "utilisateur",uniqueConstraints = {
         @UniqueConstraint(columnNames = "telephone"),
         @UniqueConstraint(columnNames = "email")
@@ -39,11 +42,17 @@ public class User {
     @Size(max = 50)
     @Email
     private String email;
+
+
     @Column
     private String resetToken;
     @OneToOne(mappedBy = "user")
     private UtilisateurPhoto utilisateurPhoto;
 
+
+    @ManyToOne
+    @JoinColumn(name = "id_typeAuditeur")
+    private TypeAuditeur typeAuditeur;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -53,9 +62,12 @@ public class User {
 
 
 
-
     public User() {
     }
+
+    public User(String nom, String prenom, String encode, String telephone, String adresse, String genre, String email) {
+    }
+
     public void UtilisateurPhoto() {
         // Constructeur par défaut sans arguments
     }
@@ -68,12 +80,13 @@ public class User {
         this.utilisateurPhoto = utilisateurPhoto;
     }
 
-    public User(String nom, String prenom, String password, String telephone, String adresse, String genre, String email) {
+    public User(String nom, String prenom, String password, String telephone, String adresse, TypeAuditeur typeAuditeur, String genre, String email) {
         this.nom=nom;
         this.prenom=prenom;
         this.password=password;
         this.telephone=telephone;
         this.adresse=adresse;
+        this.typeAuditeur = typeAuditeur;
         this.genre = genre;
         this.email=email;
     }

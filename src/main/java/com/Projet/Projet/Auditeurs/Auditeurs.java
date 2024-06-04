@@ -1,5 +1,6 @@
 package com.Projet.Projet.Auditeurs;
 
+import com.Projet.Projet.utilisateur.User.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Table(name = "auditeur")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Auditeurs {
+public class Auditeurs  extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,5 +22,4 @@ public class Auditeurs {
     private String mail;
     private String telephone;
     private String motpasse;
-    private  String cmdp;
 }
